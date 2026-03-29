@@ -1,0 +1,109 @@
+---
+// Footer.astro — Dark footer with salon logo, tagline, quick navigation links, and copyright.
+// No props needed; all content is hardcoded.
+
+// Current year computed at build time so the copyright never goes stale
+const currentYear = new Date().getFullYear();
+---
+
+<!-- Dark footer: gray-900 background creates strong visual separation from page content -->
+<footer class="bg-gray-900 text-white">
+
+  <!-- ── MAIN FOOTER CONTENT ─────────────────────────────────────────── -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-8">
+
+    <!-- Three-column grid: brand | links | contact -->
+    <!-- Stacks to a single centered column on mobile -->
+    <div class="reveal grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
+
+      <!-- ── COLUMN 1: BRAND BLOCK ─────────────────────────────────── -->
+      <div class="flex flex-col items-center md:items-start">
+        <!-- Logo: CSS filter inverts the color image to render white on dark bg -->
+        <img
+          src="/logo.jpg"
+          alt="Blessful Beauty Salon logo"
+          class="h-14 w-auto object-contain mb-4"
+          style="filter: brightness(0) invert(1);"
+        />
+
+        <!-- Salon tagline: muted gray for visual hierarchy below the logo -->
+        <p class="text-gray-400 text-sm text-center md:text-left leading-relaxed max-w-[220px]">
+          Tu belleza, nuestra pasión.<br />
+          West Palm Beach, FL
+        </p>
+      </div>
+
+      <!-- ── COLUMN 2: QUICK LINKS ──────────────────────────────────── -->
+      <div class="text-center md:text-left">
+        <!-- Column heading: small uppercase label -->
+        <h4 class="text-xs font-semibold uppercase tracking-widest text-rosegold mb-5">
+          Quick Links
+        </h4>
+
+        <!-- Navigation list — anchor links match the section IDs on the page -->
+        <ul class="space-y-3">
+          <li>
+            <a href="#services" class="text-gray-400 hover:text-rosegold-light text-sm transition-colors duration-200">
+              Services
+            </a>
+          </li>
+          <li>
+            <a href="#team" class="text-gray-400 hover:text-rosegold-light text-sm transition-colors duration-200">
+              Our Team
+            </a>
+          </li>
+          <li>
+            <a href="#location" class="text-gray-400 hover:text-rosegold-light text-sm transition-colors duration-200">
+              Location &amp; Hours
+            </a>
+          </li>
+          <li>
+            <!-- Book Now link takes visitors to the team section where Booksy buttons live -->
+            <a href="#team" class="text-gray-400 hover:text-rosegold-light text-sm transition-colors duration-200">
+              Book Appointment
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- ── COLUMN 3: CONTACT INFO ─────────────────────────────────── -->
+      <div class="text-center md:text-left">
+        <!-- Column heading -->
+        <h4 class="text-xs font-semibold uppercase tracking-widest text-rosegold mb-5">
+          Visit Us
+        </h4>
+
+        <!-- Address block -->
+        <address class="not-italic text-gray-400 text-sm leading-relaxed mb-4">
+          4632 Forest Hill Blvd<br />
+          West Palm Beach, FL 33415
+        </address>
+
+        <!-- Business hours summary -->
+        <p class="text-gray-400 text-sm leading-relaxed">
+          Mon – Sat: 9:30 AM – 7:00 PM<br />
+          <span class="text-gray-500">Sunday: Closed</span>
+        </p>
+      </div>
+
+    </div><!-- end three-column grid -->
+
+    <!-- ── DIVIDER ────────────────────────────────────────────────────── -->
+    <!-- Thin line visually separates the footer body from the copyright strip -->
+    <div class="border-t border-gray-800 mb-6"></div>
+
+    <!-- ── COPYRIGHT STRIP ────────────────────────────────────────────── -->
+    <!-- Centered, small text; year is injected at build time from currentYear -->
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p class="text-gray-500 text-xs">
+        &copy; {currentYear} Blessful Beauty Salon. All rights reserved.
+      </p>
+
+      <!-- Optional tagline / made-with note -->
+      <p class="text-gray-600 text-xs">
+        Crafted with &hearts; for West Palm Beach
+      </p>
+    </div>
+
+  </div><!-- end max-w container -->
+</footer>

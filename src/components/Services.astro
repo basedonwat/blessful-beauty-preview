@@ -1,0 +1,116 @@
+---
+// Services.astro — Three-card grid showcasing Hair, Nails, and Skincare services.
+// Uses a data array + .map() to keep the markup DRY.
+
+// Define the shape of each service card's data
+interface Service {
+  title: string;       // Display name of the service category
+  description: string; // Short marketing copy for the card body
+  imageUrl: string;    // External image URL for the card header photo
+  imageAlt: string;    // Accessible alt text for screen readers
+  items: string[];     // Bullet-point list of individual services offered
+}
+
+// Service data array — edit here to update all cards at once
+const services: Service[] = [
+  {
+    title: "Hair Services",
+    description:
+      "From precision cuts to vibrant color transformations, our master stylists craft looks that celebrate your unique beauty and style.",
+    imageUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuBM3sPFgHQidWfiDnoKzodZE0uFoywGn4loCrqQkmUy_uT2s35FPx7RdBqMCjrwYJhy5GPujimU6MXV9nHxsDkoJ09XCUcC86VpYEiJVcM6pWOp6CpR4tUj2LIg_-OtPiUBzyg8s9qyCDhfOf70ynqhn8F-u9s7jRaqcOgw5vUe-RY9GlnGbKvf6DNuJxqn4STAT_wechIb8vEpCZ286wVGzQ59pQVmN66_TWRXsfeMPVenyDl3LruXzHcuPrpvO1VKuErahfEXDmo",
+    imageAlt: "Stylist working on a client's hair in the salon",
+    items: ["Haircuts & Styling", "Color & Highlights", "Balayage & Ombre", "Keratin Treatments"],
+  },
+  {
+    title: "Nail Care",
+    description:
+      "Elevate your look with our expert nail services. From classic manicures to intricate nail art, your hands will be picture-perfect.",
+    imageUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuCwfFCek-ENlB0xSvUGgAZdKdDyz4QDiDQi2dU8jLx3hysng6277oRGTUDYuLx4OPH4XolJh29P0QsajRWQ1ZEckmvQ0VFiI-jSgUW12JX5ILCkLxKTPI5jPs6sE4K4BcHpHGUY_ptPlPnUEkBTtFp-Yf-BX8ebTg4AMQVqDxP0haaHNgELVtYcaZsiu22JyO7brswnLcui7CZHMyeHMaBYns7F0ZxGMPCzMQKPeItOAEoPh3Ci5Z5nOjWv2IgG2CtA5_VsJlyX-N0",
+    imageAlt: "Close-up of a nail artist applying gel polish",
+    items: ["Manicures & Pedicures", "Gel & Acrylic Nails", "Nail Art & Design", "Nail Repair"],
+  },
+  {
+    title: "Skincare",
+    description:
+      "Reveal your most radiant complexion with our tailored skincare treatments. Our specialists use premium products for glowing results.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=800&auto=format&fit=crop",
+    imageAlt: "Esthetician performing a facial treatment on a client",
+    items: ["Deep Cleansing Facials", "Anti-Aging Treatments", "Hydration Therapy", "Eyebrow Shaping"],
+  },
+];
+---
+
+<!-- Services section: anchor for navbar link -->
+<section id="services" class="bg-white py-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- ── DECORATIVE SECTION HEADING ─────────────────────────────────── -->
+    <!-- Flanking lines give an elegant, luxury-brand feel -->
+    <div class="reveal flex items-center justify-center mb-14">
+      <!-- Left decorative line -->
+      <div class="flex-1 max-w-[120px] h-px bg-rosegold opacity-50"></div>
+
+      <!-- Section label: uppercase, spaced tracking, rosegold color -->
+      <h2 class="font-display mx-6 text-3xl sm:text-4xl font-semibold text-gray-800 text-center whitespace-nowrap">
+        Our Services
+      </h2>
+
+      <!-- Right decorative line (mirrors the left) -->
+      <div class="flex-1 max-w-[120px] h-px bg-rosegold opacity-50"></div>
+    </div>
+
+    <!-- Short tagline below the section title -->
+    <p class="reveal reveal-delay-1 text-center text-gray-500 mb-12 max-w-xl mx-auto text-base">
+      Luxury beauty treatments crafted with passion and expertise for every client.
+    </p>
+
+    <!-- ── SERVICE CARDS GRID ──────────────────────────────────────────── -->
+    <!-- 1 column on mobile, 3 columns on large screens -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <!-- Iterate over the services array to render each card -->
+      {services.map((service, i) => (
+        <div class={`reveal reveal-delay-${i + 1} bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 overflow-hidden group`}>
+
+          <!-- Card image container: fixed height, clips the zoom animation -->
+          <div class="h-52 overflow-hidden">
+            <!-- Image zooms in on card hover via scale transform -->
+            <!-- group-hover targets the image when the parent card is hovered -->
+            <img
+              src={service.imageUrl}
+              alt={service.imageAlt}
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              loading="lazy"
+            />
+          </div>
+
+          <!-- Card body: title, description, and service bullet list -->
+          <div class="p-6">
+            <!-- Service category title -->
+            <h3 class="text-xl font-bold text-gray-800 mb-3">{service.title}</h3>
+
+            <!-- Marketing description text -->
+            <p class="text-gray-500 text-sm leading-relaxed mb-5">{service.description}</p>
+
+            <!-- Bullet list of individual services within this category -->
+            <ul class="space-y-2">
+              {service.items.map((item) => (
+                <!-- Each bullet: rosegold diamond marker + service name -->
+                <li class="flex items-center text-sm text-gray-600">
+                  <!-- Decorative rosegold diamond bullet -->
+                  <span class="w-1.5 h-1.5 bg-rosegold rounded-full mr-3 flex-shrink-0" aria-hidden="true"></span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+
+          </div><!-- end card body -->
+        </div><!-- end service card -->
+      ))}
+
+    </div><!-- end grid -->
+  </div><!-- end container -->
+</section>

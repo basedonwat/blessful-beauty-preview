@@ -1,0 +1,81 @@
+---
+// Base layout that wraps all pages with common HTML structure.
+// Every page passes a title and optional description through props.
+
+// Import global Tailwind CSS (v4 Vite plugin approach — must be a JS/TS import, not a <link> tag)
+import '../styles/global.css';
+
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+// Destructure props with a sensible default for the meta description
+const { title, description = "Blessful Beauty Salon - West Palm Beach, FL" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<!-- Set language to English for screen readers and search engines -->
+<html lang="en">
+  <head>
+    <!-- Required character encoding declaration -->
+    <meta charset="UTF-8" />
+
+    <!-- Responsive viewport so the site scales correctly on all devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO meta description — injected per-page via props -->
+    <meta name="description" content={description} />
+
+    <!-- Dynamic page title passed from each page component -->
+    <title>{title}</title>
+
+    <!-- Favicon references -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+
+    <!-- Google Fonts: Inter for clean, modern typography across all weights used -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <!-- Preconnect to the font file CDN to reduce DNS lookup time -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Load Inter at the four weights used throughout the design -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style is:global>
+      /* Smooth scroll makes anchor-link navigation feel polished (e.g. #services, #team) */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* Apply Inter as the default body font across every element */
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+    </style>
+  </head>
+
+  <!-- antialiased smooths font rendering; overflow-x-hidden prevents horizontal scroll on mobile -->
+  <body class="bg-cream text-gray-800 antialiased overflow-x-hidden">
+    <!-- <slot /> is Astro's named content insertion point — page content renders here -->
+    <slot />
+
+    <script>
+      // Scroll-reveal: add .visible when elements enter viewport
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+      );
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+  </body>
+</html>

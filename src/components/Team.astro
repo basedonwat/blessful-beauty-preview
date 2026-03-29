@@ -1,0 +1,118 @@
+---
+// Team.astro — Four-card grid showcasing the salon's stylists with Booksy booking links.
+// Uses a data array + .map() to keep the markup DRY and easy to update.
+
+// Define the shape of each team member's data
+interface TeamMember {
+  name: string;      // Stylist's first name (displayed on card)
+  role: string;      // Job title / specialty
+  imageUrl: string;  // Unsplash portrait photo URL
+  imageAlt: string;  // Accessible alt text for the portrait
+  booksyUrl: string; // Deep link to the stylist's Booksy booking page
+}
+
+// Team member data array — update booksyUrl values once live Booksy profiles exist
+const team: TeamMember[] = [
+  {
+    name: "Valentina",
+    role: "Master Hair Stylist",
+    imageUrl: "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&q=80&w=400",
+    imageAlt: "Portrait of Valentina, Master Hair Stylist",
+    booksyUrl: "#",
+  },
+  {
+    name: "Maria",
+    role: "Nail Artist",
+    imageUrl: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400",
+    imageAlt: "Portrait of Maria, Nail Artist",
+    booksyUrl: "#",
+  },
+  {
+    name: "Sofia",
+    role: "Skincare Specialist",
+    imageUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400",
+    imageAlt: "Portrait of Sofia, Skincare Specialist",
+    booksyUrl: "#",
+  },
+  {
+    name: "Camila",
+    role: "Makeup Artist",
+    imageUrl: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400",
+    imageAlt: "Portrait of Camila, Makeup Artist",
+    booksyUrl: "#",
+  },
+];
+---
+
+<!-- Team section: soft rosegold-light background distinguishes it from adjacent white sections -->
+<!-- The /30 opacity modifier is not available in Tailwind v4 inline; use custom opacity below -->
+<section id="team" class="py-20" style="background-color: rgba(245, 235, 233, 0.4);">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- ── SECTION HEADING ────────────────────────────────────────────── -->
+    <div class="reveal text-center mb-14">
+      <!-- Small decorative eyebrow label above the main heading -->
+      <p class="text-rosegold uppercase tracking-[0.25em] text-sm font-semibold mb-3">
+        The Experts Behind Your Look
+      </p>
+
+      <!-- Main section title -->
+      <h2 class="font-display text-3xl sm:text-4xl font-semibold text-gray-800">
+        Meet Our Experts
+      </h2>
+
+      <!-- Decorative divider line under the heading -->
+      <div class="w-16 h-1 bg-rosegold mx-auto mt-4 rounded-full"></div>
+
+      <!-- Short subtitle encouraging visitors to book -->
+      <p class="text-gray-500 mt-5 max-w-md mx-auto text-base">
+        Passionate professionals dedicated to making you look and feel your absolute best.
+      </p>
+    </div>
+
+    <!-- ── TEAM CARDS GRID ─────────────────────────────────────────────── -->
+    <!-- 1 column on mobile, 2 on small screens, 4 on large screens -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+      <!-- Iterate over the team array to render each member's card -->
+      {team.map((member, i) => (
+        <div class={`reveal reveal-delay-${i + 1} bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 p-6 text-center group`}>
+
+          <!-- ── CIRCULAR PORTRAIT ────────────────────────────────────── -->
+          <!-- Container: creates the circular clip and rosegold ring -->
+          <div class="relative mx-auto mb-5 w-32 h-32">
+            <!-- Rosegold ring: slightly larger than the image, positioned behind it -->
+            <div class="absolute inset-0 rounded-full border-4 border-rosegold scale-105 opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"></div>
+
+            <!-- Portrait photo: circular clip via rounded-full -->
+            <img
+              src={member.imageUrl}
+              alt={member.imageAlt}
+              class="w-full h-full rounded-full object-cover object-top relative z-10"
+              loading="lazy"
+            />
+          </div>
+
+          <!-- ── MEMBER INFO ──────────────────────────────────────────── -->
+          <!-- Stylist name: bold and prominent -->
+          <h3 class="text-lg font-bold text-gray-800 mb-1">{member.name}</h3>
+
+          <!-- Role / specialty: muted rosegold text for visual hierarchy -->
+          <p class="text-rosegold text-sm font-medium mb-5">{member.role}</p>
+
+          <!-- ── BOOKSY CTA BUTTON ────────────────────────────────────── -->
+          <!-- Dark button contrasts with the white card for strong visual CTA -->
+          <a
+            href={member.booksyUrl}
+            class="inline-block bg-gray-800 hover:bg-rosegold text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-colors duration-300"
+            aria-label={`Book an appointment with ${member.name} on Booksy`}
+          >
+            Book on Booksy
+          </a>
+
+        </div><!-- end team card -->
+      ))}
+
+    </div><!-- end grid -->
+  </div><!-- end container -->
+</section>

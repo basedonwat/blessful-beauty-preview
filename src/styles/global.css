@@ -1,0 +1,106 @@
+/* Import Tailwind CSS v4 */
+@import "tailwindcss";
+
+/* ============================================================
+   Design Tokens
+   ============================================================ */
+@theme {
+  --color-rosegold: #B67A6B;
+  --color-rosegold-dark: #9B6358;
+  --color-rosegold-light: #F5EBE9;
+  --color-cream: #FDFAF8;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+}
+
+/* ─── Keyframes ──────────────────────────────────────────── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ─── Hero entrance animations (CSS-only, no JS needed) ──── */
+.hero-anim-1 { animation: fadeInUp 0.9s cubic-bezier(0.37, 0, 0.63, 1) 0.05s both; }
+.hero-anim-2 { animation: fadeInUp 0.9s cubic-bezier(0.37, 0, 0.63, 1) 0.25s both; }
+.hero-anim-3 { animation: fadeInUp 0.9s cubic-bezier(0.37, 0, 0.63, 1) 0.45s both; }
+.hero-anim-4 { animation: fadeInUp 0.9s cubic-bezier(0.37, 0, 0.63, 1) 0.65s both; }
+.hero-anim-5 { animation: fadeIn    0.9s cubic-bezier(0.37, 0, 0.63, 1) 0.85s both; }
+
+/* ─── Scroll-reveal (IntersectionObserver adds .visible) ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.37, 0, 0.63, 1),
+              transform 0.7s cubic-bezier(0.37, 0, 0.63, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.18s; }
+.reveal-delay-3 { transition-delay: 0.28s; }
+.reveal-delay-4 { transition-delay: 0.38s; }
+
+/* ─── Nav animated underline ─────────────────────────────── */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--color-rosegold);
+  transition: width 0.35s cubic-bezier(0.37, 0, 0.63, 1);
+}
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* ─── Scrolled nav: glassmorphism ────────────────────────── */
+.nav-scrolled {
+  background-color: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 1px 24px rgba(0, 0, 0, 0.07) !important;
+}
+
+/* ─── Mobile menu: CSS grid slide transition ─────────────── */
+.mobile-menu-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 0.4s cubic-bezier(0.37, 0, 0.63, 1),
+              opacity 0.35s cubic-bezier(0.37, 0, 0.63, 1);
+}
+.mobile-menu-wrap.open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.mobile-menu-wrap > div {
+  overflow: hidden;
+}
+
+/* ─── Accessibility: prefers-reduced-motion ──────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .hero-anim-1, .hero-anim-2, .hero-anim-3,
+  .hero-anim-4, .hero-anim-5 {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+  .mobile-menu-wrap {
+    transition: none !important;
+  }
+}

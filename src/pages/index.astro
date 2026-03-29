@@ -1,0 +1,49 @@
+---
+// index.astro — The main (and only) page of the Blessful Beauty Salon website.
+// Imports the base layout and all section components, arranging them in order.
+
+// Base HTML shell: handles <head>, fonts, global styles, and <body>
+import Layout from '../layouts/Layout.astro';
+
+// Sticky navigation header with logo and links
+import Nav from '../components/Nav.astro';
+
+// Full-width hero section with background photo, headline, and CTA
+import Hero from '../components/Hero.astro';
+
+// Three-card services grid: Hair, Nails, Skincare
+import Services from '../components/Services.astro';
+
+// Four-card team grid with individual Booksy booking buttons
+import Team from '../components/Team.astro';
+
+// Two-column location section: address/hours + embedded Google Map
+import Location from '../components/Location.astro';
+
+// Dark footer with logo, tagline, quick links, and copyright
+import Footer from '../components/Footer.astro';
+---
+
+<!-- Pass the SEO title and description to the Layout wrapper -->
+<Layout
+  title="Blessful Beauty Salon | West Palm Beach, FL"
+  description="Blessful Beauty Salon in West Palm Beach, FL — expert hair, nails, and skincare services. Book your appointment today."
+>
+  <!-- Sticky header renders above all sections -->
+  <Nav />
+
+  <!-- Hero is the first visible element below the nav -->
+  <Hero />
+
+  <!-- Services section: anchored at #services for nav link -->
+  <Services />
+
+  <!-- Team section: anchored at #team — Book Now CTA links here -->
+  <Team />
+
+  <!-- Location section: anchored at #location with map and hours -->
+  <Location />
+
+  <!-- Footer closes the page -->
+  <Footer />
+</Layout>

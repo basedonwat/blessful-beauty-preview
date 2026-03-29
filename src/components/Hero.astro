@@ -1,0 +1,86 @@
+---
+// Hero.astro — Full-width hero section with a background photo, gradient overlay,
+// centered headline, Spanish subtitle, and a CTA button linking to #team.
+// Uses a <style> block because Tailwind cannot inline arbitrary background-image URLs.
+---
+
+<!-- Full-viewport hero section; id not needed (it's the page top) -->
+<!-- The .hero-bg class below applies the background image via the <style> block -->
+<section class="hero-bg relative flex items-center justify-center min-h-[80vh]">
+
+  <!-- ── DARK GRADIENT OVERLAY ──────────────────────────────────────────── -->
+  <!-- Absolute overlay darkens the photo so white text remains readable -->
+  <!-- Gradient goes from a deeper dark at the bottom to slightly lighter at top -->
+  <div class="absolute inset-0 bg-gradient-to-b from-black/50 to-black/70"></div>
+
+  <!-- ── HERO CONTENT ───────────────────────────────────────────────────── -->
+  <!-- relative + z-10 lifts content above the overlay -->
+  <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+
+    <!-- Small decorative label above the main headline -->
+    <p class="hero-anim-1 text-rosegold-light uppercase tracking-[0.3em] text-sm font-semibold mb-4">
+      West Palm Beach, FL
+    </p>
+
+    <!-- Main headline: bold, large, all-caps for a luxury beauty salon feel -->
+    <!-- text-4xl on mobile, scaling up to text-6xl on large screens -->
+    <h1 class="hero-anim-2 font-display text-5xl sm:text-6xl lg:text-8xl font-light italic text-white leading-none mb-6">
+      Exquisite Beauty Services
+    </h1>
+
+    <!-- Subtitle in Spanish reflecting the salon's Latin heritage and warmth -->
+    <p class="hero-anim-3 text-lg sm:text-xl text-gray-200 mb-10 font-light max-w-2xl mx-auto leading-relaxed">
+      ✨ Tu belleza, nuestra pasión. Visítanos y déjate consentir por nuestras
+      expertas en cabello, uñas y cuidado de la piel. ✨
+    </p>
+
+    <!-- CTA button: links to #team so visitors can browse stylists and book -->
+    <!-- Rosegold fill with a subtle scale effect on hover for interactivity -->
+    <a
+      href="#team"
+      class="hero-anim-4 inline-block bg-rosegold hover:bg-rosegold-dark text-white font-semibold px-8 py-4 rounded-full text-lg transition-all duration-300 hover:scale-105 shadow-lg"
+    >
+      Meet Our Team &amp; Book
+    </a>
+
+  </div><!-- end hero content -->
+
+  <!-- ── DECORATIVE SCROLL INDICATOR ───────────────────────────────────── -->
+  <!-- Animated arrow at the bottom hints that the page continues below -->
+  <div class="hero-anim-5 absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+    <svg
+      class="w-6 h-6 text-white/70"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
+  </div>
+
+</section>
+
+<!-- ── BACKGROUND IMAGE STYLES ────────────────────────────────────────────── -->
+<!-- A <style> block is required here because Tailwind cannot reference
+     arbitrary external URLs in utility classes at build time. -->
+<style>
+  .hero-bg {
+    /* Background photo from the Blessful Beauty Salon design stitch */
+    background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBtZbMZ1aVAQJ534Hp5uUfqp5TvcnXV22S3pG-xOWMRxN-B-QaxS63bCMFDAYT0i_b50piKW2Szl_8-KS2iD_O5ws09NFS3ma17qwoYsC0VQ_h7kruBSKqJc7QznBkMewJOnhju4x7OZO379hkKcnfywhfZ7AaHR9iWnacU1wapfs1_lNbc3Zp7CvrhAi8LY7BvH-4BLmYqlBWhpAAS8moxgLgELX3TrqCRLOh5XitEqCtrNtY-ar7f7lIXaFhnTntwNCGBFkDhuC4');
+    /* Cover fills the container without letterboxing */
+    background-size: cover;
+    /* Centers the focal point of the image */
+    background-position: center center;
+    /* Prevents the background from scrolling with the page (parallax feel) */
+    background-attachment: fixed;
+  }
+
+  /* Disable parallax on mobile: fixed attachment causes performance issues
+     and rendering bugs on iOS Safari */
+  @media (max-width: 768px) {
+    .hero-bg {
+      background-attachment: scroll;
+    }
+  }
+</style>
